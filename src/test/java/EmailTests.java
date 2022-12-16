@@ -49,7 +49,7 @@ public class EmailTests {
 
 
     @Test
-    void fillLinesTest() {
+    void fillFormTest() {
         open("/automation-practice-form");
         $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
         executeJavaScript("$('#fixedban').remove()");
@@ -67,10 +67,11 @@ public class EmailTests {
         $("#subjectsInput").setValue("Math").pressEnter();
         $("#hobbiesWrapper").$(byText("Sports")).click();
         $("#currentAddress").setValue("address 1");
+        $(".form-control-file").uploadFromClasspath("1.png");
         $("#state").click();
         $("#stateCity-wrapper").$(byText("NCR")).click();
         $("#city").click();
-        $("#stateCity-wrapper").$(byText("Moscow")).click();
+        $("#stateCity-wrapper").$(byText("Delhi")).click();
         $("#submit").click();
 
         $(".modal-dialog").should(appear);
