@@ -1,6 +1,6 @@
-import com.codeborne.selenide.Condition;
+package tests;
+
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -76,8 +76,18 @@ public class EmailTests {
 
         $(".modal-dialog").should(appear);
         $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
-        $(".table-responsive").shouldHave(text("Di"), text("Ev"),
-                text("di@maimail.ru"), text("1234567890"));
+        $(".table-responsive").shouldHave(
+                text("Di"),
+                text("Ev"),
+                text("di@maimail.ru"),
+                text("1234567890"),
+                text("30 April,1988"),
+                text("Maths"),
+                text("Sports"),
+                text("1.png"),
+                text("address 1"),
+                text("NCR Delhi")
+                );
 
     }
 }
