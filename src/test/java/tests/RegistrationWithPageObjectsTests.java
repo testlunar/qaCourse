@@ -2,38 +2,44 @@ package tests;
 
 import org.junit.jupiter.api.Test;
 
+
 public class RegistrationWithPageObjectsTests extends TestBase {
     @Test
     void successfulRegistrationTest() {
-        String userName = "Di";
 
+        TestData testData = new TestData();
         registrationPage.openPage()
-                .setFirstName(userName)
-                .setLastName("Eg")
-                .setEmail("di@mamil.com")
-                .setGender("Female")
-                .setPhone("1234567890")
-                .setBirthDate("14", "April", "1990")
-                .setSubject("Math")
-                .setHobbies("Sports")
+                .setFirstName(testData.firstName)
+                .setLastName(testData.lastName)
+                .setEmail(testData.email)
+                .setGender(testData.gender)
+                .setPhone(testData.phone)
+                .setBirthDate(
+                        testData.birthDate[0],
+                        testData.birthDate[1],
+                        testData.birthDate[2])
+                .setSubject(testData.subject)
+                .setHobbies(testData.hobby)
                 .uploadPicture("1.png")
-                .setAdress("some adress1")
-                .setState("NCR")
-                .setCity("Delhi")
+                .setAdress(testData.adress)
+                .setState(testData.state)
+                .setCity(testData.city)
                 .submitForm();
 
 
         registrationPage.verifyResultsModalAppears()
-                .verifyResult("Student Name", userName + " Eg")
-                .verifyResult("Student Email", "di@mamil.com")
-                .verifyResult("Gender", "Female")
-                .verifyResult("Mobile", "1234567890")
-                .verifyResult("Date of Birth", "14 April,1990")
-                .verifyResult("Subjects","Math")
-                .verifyResult("Hobbies", "Sports")
+                .verifyResult("Student Name", testData.firstName + " " + testData.lastName)
+                .verifyResult("Student Email", testData.email)
+                .verifyResult("Gender", testData.gender)
+                .verifyResult("Mobile", testData.phone)
+                .verifyResult("Date of Birth", testData.birthDate[0] + " "
+                        + testData.birthDate[1] + ","
+                        + testData.birthDate[2])
+                .verifyResult("Subjects", testData.subject)
+                .verifyResult("Hobbies", testData.hobby)
                 .verifyResult("Picture", "1.png")
-                .verifyResult("Address", "some adress1")
-                .verifyResult("State and City", "NCR Delhi");
+                .verifyResult("Address", testData.adress)
+                .verifyResult("State and City", testData.state + " " + testData.city);
 
     }
 }
