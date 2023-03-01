@@ -1,13 +1,15 @@
 package tests;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import static io.qameta.allure.Allure.step;
 
-
+@Tag("registration")
 public class RegistrationWithPageObjectsTests extends TestBase {
     @Test
     void successfulRegistrationTest() {
-
         TestData testData = new TestData();
+        step("Open and fill registrations form", () -> {
         registrationPage.openPage()
                 .setFirstName(testData.firstName)
                 .setLastName(testData.lastName)
@@ -25,8 +27,8 @@ public class RegistrationWithPageObjectsTests extends TestBase {
                 .setState(testData.state)
                 .setCity(testData.city)
                 .submitForm();
-
-
+        });
+        step("Check form results", () -> {
         registrationPage.verifyResultsModalAppears()
                 .verifyResult("Student Name", testData.firstName + " " + testData.lastName)
                 .verifyResult("Student Email", testData.email)
@@ -40,6 +42,6 @@ public class RegistrationWithPageObjectsTests extends TestBase {
                 .verifyResult("Picture", "1.png")
                 .verifyResult("Address", testData.adress)
                 .verifyResult("State and City", testData.state + " " + testData.city);
-
+        });
     }
 }

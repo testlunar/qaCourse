@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'io.qameta.allure' version '2.10.0'
 }
 
 group 'org.example'
@@ -11,14 +12,44 @@ repositories {
 compileJava.options.encoding("UTF-8")
 compileTestJava.options.encoding("UTF-8")
 
+allure {
+    report {
+        version.set("2.19.0")
+    }
+    adapter { // отвечает за появление папочки build/allure-results
+        aspectjWeaver.set(true) //обработка аннотации @Step
+        frameworks {
+            junit5 { //название фреймворка
+                adapterVersion.set("2.19.0") //версия интеграции фреймворка и Allure
+            }
+        }
+    }
+}
+
+
 dependencies {
-   implementation (
+    implementation(
             "com.codeborne:selenide:6.9.0",
             "org.junit.jupiter:junit-jupiter:5.8.2",
-            'com.github.javafaker:javafaker:1.0.2'
+            'com.github.javafaker:javafaker:1.0.2',
+            "io.qameta.allure:allure-selenide:2.19.0",
+            "org.slf4j:slf4j-simple:1.7.32"
     )
 }
 
-test {
+tasks.withType(Test) {
     useJUnitPlatform()
+
+    testLogging {
+        lifecycle {
+            events "started", "skipped", "failed", "standard_error", "standard_out"
+            exceptionFormat "short"
+        }
+    }
+}
+
+task smoke_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags("smoke")
+    }
 }

@@ -13,8 +13,8 @@ public class GithubSelenideTest {
     @Tag("Selenide")
     void checkThatSoftAssertionsHasCodeExampleForJUnit5() {
         open("https://github.com/selenide/selenide");
-        $("[id=wiki-tab]").click();
-        $("[id=user-content-chapters]").parent().sibling(0)
+        $("#wiki-tab").click();
+        $("#user-content-chapters").parent().sibling(0)
                 .$$("li").findBy(Condition.text("Soft assertions")).shouldBe(Condition.exist);
 
         $(byText("Soft assertions")).click();
